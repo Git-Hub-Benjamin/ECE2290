@@ -1,9 +1,5 @@
-SIM = iverilog
-VVP = vvp
-
-all:
-	$(SIM) -g2012 -o sim src/*.v
-	$(VVP) sim
+implement:
+	vivado -mode batch -source build.tcl
 
 clean:
-	rm -f sim *.txt
+	rm -f *.bit *.rpt post_synth.v
