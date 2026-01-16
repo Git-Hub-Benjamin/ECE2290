@@ -3,24 +3,24 @@
 module testbench;
 
     reg clk;
-    reg en;
-    reg d;
-    wire q;
+    reg [3:0] a, b, c, d;
+    wire [5:0] sum;
 
     integer clk_count = 0;
     integer fid;
 
-    simple_module DUT (
+    top DUT (
         .clk(clk),
-        .en(en),
+        .a(a),
+        .b(b),
+        .c(c),
         .d(d),
-        .q(q)
+        .sum(sum)
     );
 
     initial begin
         clk = 0;
-        en  = 0;
-        d   = 0;
+        a = 0; b = 0; c = 0; d = 0;
         fid = $fopen("test_result.txt", "w");
     end
 
@@ -28,21 +28,23 @@ module testbench;
 
     always @(posedge clk) begin
         clk_count <= clk_count + 1;
-        if (clk_count == 10)
+        if (clk_count == 20)
             $finish;
     end
 
     always @(posedge clk) begin
-        en <= d;
-        d  <= ~en;
+        a <= $random;
+        b <= $random;
+        c <= $random;
+        d <= $random;
     end
 
     always @(posedge clk) begin
-        $write("clk:%d en:%b d:%b q:%b\n",
-                clk_count, en, d, q);
+        $write("clk:%0d a:%0d b:%0d c:%0d d:%0d sum:%0d\n",
+               clk_count, a, b, c, d, sum);
         $fwrite(fid,
-                "clk:%d en:%b d:%b q:%b\n",
-                clk_count, en, d, q);
+               "clk:%0d a:%0d b:%0d c:%0d d:%0d sum:%0d\n",
+               clk_count, a, b, c, d, sum);
     end
 
 endmodule
