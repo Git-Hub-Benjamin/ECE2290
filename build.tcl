@@ -1,14 +1,14 @@
 read_verilog [glob src/*.v]
-read_xdc simple_adder.xdc
+read_xdc reverse_bits.xdc
 
-synth_design -top top -part xc7a35tcpg236-1
+synth_design -top reverse_bits_module -part xc7a35tcpg236-1
 write_verilog -force post_synth.v
 
 opt_design
 place_design
 route_design
 
-report_timing_summary -file post_route_timing.rpt
-report_utilization -file post_route_utilization.rpt
+report_timing_summary -file reverse_bits_timing.rpt
+report_utilization -file reverse_bits_utilization.rpt
 
-write_bitstream -force simple_adder.bit
+write_bitstream -force reverse_bits.bit
